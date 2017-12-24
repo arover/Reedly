@@ -29,7 +29,10 @@ public final class MainActivity extends BaseActivity {
         setContentView(R.layout.activity_main);
 
         if (savedInstanceState == null) {
-            activityUtils.addFragmentWithTagToActivity(fragmentManager, UserSubscriptionsFragment.newInstance(), R.id.activity_container, UserSubscriptionsFragment.TAG);
+            activityUtils.addFragmentWithTagToActivity(fragmentManager,
+                    UserSubscriptionsFragment.newInstance(),
+                    R.id.activity_container,
+                    UserSubscriptionsFragment.TAG);
         }
     }
 

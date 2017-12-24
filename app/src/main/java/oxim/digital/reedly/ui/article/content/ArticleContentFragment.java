@@ -9,8 +9,9 @@ import android.webkit.WebView;
 
 import javax.inject.Inject;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import oxim.digital.reedly.R;
 import oxim.digital.reedly.base.BaseFragment;
 import oxim.digital.reedly.base.ScopedPresenter;
@@ -25,8 +26,9 @@ public final class ArticleContentFragment extends BaseFragment implements Articl
     @Inject
     ArticleContentContract.Presenter presenter;
 
-    @Bind(R.id.article_content_web_view)
+    @BindView(R.id.article_content_web_view)
     WebView articleContentWebView;
+    private Unbinder unbinder;
 
     public static ArticleContentFragment newInstance(final String articleContentUrl) {
         final ArticleContentFragment fragment = new ArticleContentFragment();
@@ -40,7 +42,7 @@ public final class ArticleContentFragment extends BaseFragment implements Articl
     @Override
     public View onCreateView(final LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable final Bundle savedInstanceState) {
         final View fragmentView = inflater.inflate(R.layout.fragment_article_content, container, false);
-        ButterKnife.bind(this, fragmentView);
+        unbinder = ButterKnife.bind(this, fragmentView);
         return fragmentView;
     }
 
@@ -72,7 +74,7 @@ public final class ArticleContentFragment extends BaseFragment implements Articl
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ButterKnife.unbind(this);
+        unbinder.unbind();
     }
 
     @Override

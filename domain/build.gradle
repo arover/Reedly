@@ -3,18 +3,12 @@ buildscript {
     repositories {
         mavenCentral()
     }
-
-    dependencies {
-        classpath 'me.tatarka:gradle-retrolambda:3.2.5'
-    }
 }
 
-// Required because retrolambda is on maven central
+
 repositories {
     mavenCentral()
 }
-
-apply plugin: 'me.tatarka.retrolambda'
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
@@ -22,10 +16,4 @@ dependencies {
     compile 'com.annimon:stream:' + project.ext.streamsVersion
     compile 'junit:junit:4.12'
     testCompile 'org.mockito:mockito-inline:' + project.ext.mockitoVersion
-}
-
-retrolambda {
-    jdk System.getenv("JAVA8_HOME")
-    defaultMethods true
-    incremental false
 }

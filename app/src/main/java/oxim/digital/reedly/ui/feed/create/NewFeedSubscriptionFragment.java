@@ -12,9 +12,10 @@ import android.widget.TextView;
 
 import javax.inject.Inject;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.Unbinder;
 import oxim.digital.reedly.R;
 import oxim.digital.reedly.base.BaseFragment;
 import oxim.digital.reedly.base.ScopedPresenter;
@@ -35,23 +36,24 @@ public final class NewFeedSubscriptionFragment extends BaseFragment implements N
     @Inject
     ActionRouter actionRouter;
 
-    @Bind(R.id.new_feed_subscription_content_container)
+    @BindView(R.id.new_feed_subscription_content_container)
     CardView newFeedSubscriptionContentContainer;
 
-    @Bind(R.id.dialog_background)
+    @BindView(R.id.dialog_background)
     View dialogBackground;
 
-    @Bind(R.id.feed_url_input)
+    @BindView(R.id.feed_url_input)
     TextInputEditText feedUrlInput;
 
-    @Bind(R.id.message_text_view)
+    @BindView(R.id.message_text_view)
     TextView messageTextView;
 
-    @Bind(R.id.loading_indicator)
+    @BindView(R.id.loading_indicator)
     View loadingIndicator;
 
-    @Bind(R.id.add_feed_button)
+    @BindView(R.id.add_feed_button)
     Button addNewFeedButton;
+    private Unbinder unbinder;
 
     public static NewFeedSubscriptionFragment newInstance() {
         return new NewFeedSubscriptionFragment();
@@ -61,7 +63,7 @@ public final class NewFeedSubscriptionFragment extends BaseFragment implements N
     @Override
     public View onCreateView(final LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable final Bundle savedInstanceState) {
         final View fragmentView = inflater.inflate(R.layout.fragment_new_feed_subscription, container, false);
-        ButterKnife.bind(this, fragmentView);
+        unbinder = ButterKnife.bind(this, fragmentView);
         return fragmentView;
     }
 
@@ -84,7 +86,7 @@ public final class NewFeedSubscriptionFragment extends BaseFragment implements N
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ButterKnife.unbind(this);
+        unbinder.unbind();
     }
 
     @Override
