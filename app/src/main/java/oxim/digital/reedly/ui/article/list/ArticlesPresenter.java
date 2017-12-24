@@ -14,7 +14,8 @@ import oxim.digital.reedly.ui.mapper.FeedViewModeMapper;
 import oxim.digital.reedly.ui.model.ArticleViewModel;
 import rx.functions.Action1;
 
-public final class ArticlesPresenter extends BasePresenter<ArticlesContract.View> implements ArticlesContract.Presenter {
+public final class ArticlesPresenter extends BasePresenter<ArticlesContract.View>
+        implements ArticlesContract.Presenter {
 
     @Inject
     GetArticlesUseCase getArticlesUseCase;
@@ -41,17 +42,17 @@ public final class ArticlesPresenter extends BasePresenter<ArticlesContract.View
     @Override
     public void fetchArticles(final int feedId) {
         viewActionQueue.subscribeTo(getArticlesUseCase.execute(feedId)
-                                                      .map(feedViewModeMapper::mapArticlesToViewModels)
-                                                      .map(this::toViewAction),
-                                    Throwable::printStackTrace);
+                        .map(feedViewModeMapper::mapArticlesToViewModels)
+                        .map(this::toViewAction),
+                Throwable::printStackTrace);
     }
 
     @Override
     public void fetchFavouriteArticles() {
         viewActionQueue.subscribeTo(getFavouriteArticlesUseCase.execute()
-                                                               .map(feedViewModeMapper::mapArticlesToViewModels)
-                                                               .map(this::toViewAction),
-                                    Throwable::printStackTrace);
+                        .map(feedViewModeMapper::mapArticlesToViewModels)
+                        .map(this::toViewAction),
+                Throwable::printStackTrace);
     }
 
     private Action1<ArticlesContract.View> toViewAction(final List<ArticleViewModel> articles) {
@@ -66,15 +67,16 @@ public final class ArticlesPresenter extends BasePresenter<ArticlesContract.View
     @Override
     public void markArticleAsRead(final int articleId) {
         viewActionQueue.subscribeTo(markArticleAsReadUseCase.execute(articleId),
-                                    view -> { },
-                                    Throwable::printStackTrace);
+                view -> { },
+                Throwable::printStackTrace);
     }
 
     @Override
     public void toggleArticleFavourite(final ArticleViewModel articleViewModel) {
-        viewActionQueue.subscribeTo(articleViewModel.isFavourite ? unFavouriteArticleUseCase.execute(articleViewModel.id)
-                                                                 : favouriteArticleUseCase.execute(articleViewModel.id),
-                                    view -> { },
-                                    Throwable::printStackTrace);
+        viewActionQueue.subscribeTo(articleViewModel.isFavourite ? unFavouriteArticleUseCase
+                        .execute(articleViewModel.id)
+                        : favouriteArticleUseCase.execute(articleViewModel.id),
+                view -> { },
+                Throwable::printStackTrace);
     }
 }

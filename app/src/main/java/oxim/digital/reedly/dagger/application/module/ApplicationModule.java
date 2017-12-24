@@ -46,7 +46,8 @@ public final class ApplicationModule {
 
     @Provides
     @Singleton
-    ViewActionQueueProvider provideViewActionQueueProvider(final @Named(ThreadingModule.MAIN_SCHEDULER) Scheduler mainScheduler) {
+    ViewActionQueueProvider provideViewActionQueueProvider(
+            final @Named(ThreadingModule.MAIN_SCHEDULER) Scheduler mainScheduler) {
         return new ViewActionQueueProviderImpl(mainScheduler);
     }
 

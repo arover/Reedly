@@ -20,25 +20,28 @@ public final class FeedViewModelMapperImpl implements FeedViewModeMapper {
 
     @Override
     public FeedViewModel mapFeedToViewModel(final Feed feed) {
-        return new FeedViewModel(feed.id, feed.title, feed.imageUrl, feed.pageLink, feed.description);
+        return new FeedViewModel(feed.id, feed.title, feed.imageUrl, feed.pageLink,
+                feed.description);
     }
 
     @Override
     public List<FeedViewModel> mapFeedsToViewModels(final List<Feed> feeds) {
         return Stream.of(feeds)
-                     .map(this::mapFeedToViewModel)
-                     .toList();
+                .map(this::mapFeedToViewModel)
+                .toList();
     }
 
     @Override
     public ArticleViewModel mapArticleToViewModel(final Article article) {
-        return new ArticleViewModel(article.id, article.title, article.link, dateUtils.format(article.publicationDate, DateUtils.SHORT_DATE_FORMAT), article.isNew, article.isFavourite);
+        return new ArticleViewModel(article.id, article.title, article.link,
+                dateUtils.format(article.publicationDate, DateUtils.SHORT_DATE_FORMAT),
+                article.isNew, article.isFavourite);
     }
 
     @Override
     public List<ArticleViewModel> mapArticlesToViewModels(final List<Article> articles) {
         return Stream.of(articles)
-                     .map(this::mapArticleToViewModel)
-                     .toList();
+                .map(this::mapArticleToViewModel)
+                .toList();
     }
 }
