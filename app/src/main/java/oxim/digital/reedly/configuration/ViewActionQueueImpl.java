@@ -28,18 +28,30 @@ public final class ViewActionQueueImpl<View> implements ViewActionQueue<View> {
     }
 
     @Override
-    public void subscribeTo(final Observable<Action1<View>> observable, final Action1<View> onCompleteAction, final Action1<Throwable> errorAction) {
-        subscriptions.add(observable.observeOn(observeScheduler).subscribe(this::onResult, errorAction::call, () -> onResult(onCompleteAction)));
+    public void subscribeTo(final Observable<Action1<View>> observable,
+                            final Action1<View> onCompleteAction,
+                            final Action1<Throwable> errorAction) {
+
+        subscriptions.add(observable.observeOn(observeScheduler)
+                .subscribe(this::onResult, errorAction, () -> onResult(onCompleteAction)));
     }
 
     @Override
-    public void subscribeTo(final Single<Action1<View>> single, final Action1<Throwable> errorAction) {
-        subscriptions.add(single.observeOn(observeScheduler).subscribe(this::onResult, errorAction::call));
+    public void subscribeTo(final Single<Action1<View>> single,
+                            final Action1<Throwable> errorAction) {
+
+        subscriptions.add(single.observeOn(observeScheduler)
+                .subscribe(this::onResult, errorAction));
+
     }
 
     @Override
-    public void subscribeTo(final Completable completable, final Action1<View> onCompleteAction, final Action1<Throwable> errorAction) {
-        subscriptions.add(completable.observeOn(observeScheduler).subscribe(() -> onResult(onCompleteAction), errorAction::call));
+    public void subscribeTo(final Completable completable, final Action1<View> onCompleteAction,
+                            final Action1<Throwable> errorAction) {
+
+        subscriptions.add(completable.observeOn(observeScheduler)
+                .subscribe(() -> onResult(onCompleteAction), errorAction));
+
     }
 
     private void onResult(final Action1<View> resultAction) {
@@ -99,27 +111,28 @@ public final class ViewActionQueueImpl<View> implements ViewActionQueue<View> {
         if (isPaused != that.isPaused) {
             return false;
         }
-        if (viewActions != null ? !viewActions.equals(that.viewActions) : that.viewActions != null) {
+        if (!viewActions.equals(that.viewActions)) {
             return false;
         }
-        if (queueLock != null ? !queueLock.equals(that.queueLock) : that.queueLock != null) {
+        if (!queueLock.equals(that.queueLock)) {
             return false;
         }
-        if (viewActionSubject != null ? !viewActionSubject.equals(that.viewActionSubject) : that.viewActionSubject != null) {
+        if (!viewActionSubject.equals(that.viewActionSubject)) {
             return false;
         }
-        if (subscriptions != null ? !subscriptions.equals(that.subscriptions) : that.subscriptions != null) {
+        if (!subscriptions.equals(that.subscriptions)) {
             return false;
         }
-        return observeScheduler != null ? observeScheduler.equals(that.observeScheduler) : that.observeScheduler == null;
+        return observeScheduler != null ? observeScheduler
+                .equals(that.observeScheduler) : that.observeScheduler == null;
     }
 
     @Override
     public int hashCode() {
-        int result = viewActions != null ? viewActions.hashCode() : 0;
-        result = 31 * result + (queueLock != null ? queueLock.hashCode() : 0);
-        result = 31 * result + (viewActionSubject != null ? viewActionSubject.hashCode() : 0);
-        result = 31 * result + (subscriptions != null ? subscriptions.hashCode() : 0);
+        int result = viewActions.hashCode();
+        result = 31 * result + queueLock.hashCode();
+        result = 31 * result + viewActionSubject.hashCode();
+        result = 31 * result + subscriptions.hashCode();
         result = 31 * result + (observeScheduler != null ? observeScheduler.hashCode() : 0);
         result = 31 * result + (isPaused ? 1 : 0);
         return result;
